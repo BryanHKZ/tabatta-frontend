@@ -1,10 +1,11 @@
 import React from 'react';
+import LayoutApp from "../../components/LayoutApp";
 
 const Home = () => {
   return (
-    <div>
-      desde Home
-    </div>
+    <LayoutApp>
+      desde home
+    </LayoutApp>
   );
 };
 
