@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
-function App() {
+// import ExerciseState from "./context/ejercicios/exerciseState";
+// import AuthState from "./context/autenticacion/authState";
+// import TabattaState from "./context/tabatta/tabattaState";
+
+import Home from "./views/home/Home";
+import Login from "./views/login/Login";
+import Register from "./views/register/Register";
+
+// const token = localStorage.getItem("token");
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <AuthState>
+    //   <TabattaState>
+    //     <ExerciseState>
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          component={Home}
+        />
+        <Route
+          exact
+          path="/login"
+          component={Login}
+        />
+        <Route
+          exact
+          path="/register"
+          component={Register}
+        />
+      </Switch>
+    </Router>
+    //     </ExerciseState>
+    //   </TabattaState>
+    // </AuthState>
   );
-}
+};
 
 export default App;
