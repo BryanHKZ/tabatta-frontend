@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
 import LayoutApp from "../../components/LayoutApp";
+import Head from "./components/Head";
+import Info from "./components/Info";
 
 const Home = () => {
   return (
     <LayoutApp>
-      desde home
+      <Head />
+      <Info />
     </LayoutApp>
   );
 };

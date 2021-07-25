@@ -1,10 +1,7 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; //Redirect,
+
+import "./index.css";
 
 // import ExerciseState from "./context/ejercicios/exerciseState";
 // import AuthState from "./context/autenticacion/authState";
@@ -13,6 +10,7 @@ import {
 import Home from "./views/home/Home";
 import Login from "./views/login/Login";
 import Register from "./views/register/Register";
+import Tabatta from "./views/tabatta/Tabatta";
 
 // const token = localStorage.getItem("token");
 
@@ -23,21 +21,10 @@ const App = () => {
     //     <ExerciseState>
     <Router>
       <Switch>
-        <Route
-          exact
-          path="/"
-          component={Home}
-        />
-        <Route
-          exact
-          path="/login"
-          component={Login}
-        />
-        <Route
-          exact
-          path="/register"
-          component={Register}
-        />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/tabatta" component={Tabatta} />
       </Switch>
     </Router>
     //     </ExerciseState>
