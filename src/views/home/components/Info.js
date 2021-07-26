@@ -21,10 +21,10 @@ const InfoCardContainer = styled.div`
 const Info = () => {
   return (
     <InfoContainer>
-      <InfoTitle>Our Services</InfoTitle>
+      <InfoTitle>Nuestros Servicios</InfoTitle>
       <InfoCardContainer>
         {exampleData.homeInfo.map((e) => (
-          <InfoCard datos={e} />
+          <InfoCard datos={e} key={e.id}/>
         ))}
       </InfoCardContainer>
     </InfoContainer>

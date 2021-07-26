@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { ArrowRightOutlined } from "@ant-design/icons";
+import { RightOutlined } from "@ant-design/icons";
 
 const ListContainer = styled.div`
   padding: 1rem 0;
@@ -17,15 +17,24 @@ const ItemList = styled.div`
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+  border-radius: 10px;
 `;
 
-const TabattaList = ({listaTabatta}) => {
+const ItemText = styled.span`
+  font-weight: 500;
+  padding: 5px;
+`;
+
+const TabattaList = ({ listaTabatta }) => {
+  const handleSearchTabatta = (idTabatta) => {
+    console.log(idTabatta);
+  };
   return (
     <ListContainer>
       {listaTabatta.map((r) => (
-        <ItemList key={r.id}>
-          <h3>{r.nombre}</h3>
-          <ArrowRightOutlined />
+        <ItemList key={r.id} onClick={() => handleSearchTabatta(r.id)}>
+          <ItemText>{r.nombre}</ItemText>
+          <RightOutlined />
         </ItemList>
       ))}
     </ListContainer>

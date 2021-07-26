@@ -56,12 +56,11 @@ const Navbar = () => {
           <Logo src={logo} alt="Logo Tabatta" />
           <ButtonText>Tabatta</ButtonText>
         </HomeButton>
-        <NavOption to={"/tabatta"}>Tabatta's List</NavOption>
-        <NavOption to={"#"}>Profile</NavOption>
+        <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
       </NavigationButtons>
 
       <NavCSOption to={"/login"}>
-        <ImportOutlined /> Log Out
+        <ImportOutlined /> Cerrar Sesión
       </NavCSOption>
     </NavbarContainer>
   );

@@ -10,9 +10,12 @@ const { Header, Footer, Content } = Layout;
 const Monda = styled(Content)`
   min-height: 100vh;
   background: white;
-  padding: 0 8rem;
+  padding: 0 5rem;
 `;
 const Monda2 = styled(Header)`
+  background: #f5f5f5;
+`;
+const Monda3 = styled(Footer)`
   background: #f5f5f5;
 `;
 
@@ -23,9 +26,9 @@ const LayoutApp = ({ children }) => {
         <Navbar />
       </Monda2>
       <Monda>{children}</Monda>
-      <Footer>
+      <Monda3>
         <FooterB />
-      </Footer>
+      </Monda3>
     </Layout>
   );
 };

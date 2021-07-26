@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import LayoutApp from "../../components/LayoutApp";
 import Sidebar from "./components/Sidebar";
+import EjercicioList from "./components/EjercicioList";
 
 const TabattaView = styled.section`
   display: flex;
@@ -13,7 +14,7 @@ const Tabatta = () => {
     <LayoutApp>
       <TabattaView>
         <Sidebar />
-        hola
+        <EjercicioList />
       </TabattaView>
     </LayoutApp>
   );
