@@ -13,7 +13,7 @@ const Login = (props) => {
 
     useEffect(() => {
       if(autenticado){
-        props.history.push('/')
+        props.history.push('/home')
       }
     }, [autenticado]);
 

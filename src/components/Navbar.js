@@ -63,7 +63,7 @@ const Navbar = () => {
         <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
       </NavigationButtons>
 
-      <NavCSOption to={"/login"} onClick={() => cerrarSesion()}>
+      <NavCSOption to={"/"} onClick={() => cerrarSesion()}>
         <ImportOutlined /> Cerrar Sesión
       </NavCSOption>
     </NavbarContainer>

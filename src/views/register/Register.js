@@ -12,7 +12,7 @@ const Register = (props) => {
 
   useEffect(() => {
     if (autenticado) {
-      props.history.push("/");
+      props.history.push("/home");
     }
 
     // eslint-disable-next-line

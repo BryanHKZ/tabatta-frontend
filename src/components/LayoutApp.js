@@ -7,28 +7,28 @@ import FooterB from "./Footer";
 
 const { Header, Footer, Content } = Layout;
 
-const Monda = styled(Content)`
+const MainContainer = styled(Content)`
   min-height: 100vh;
   background: white;
   padding: 0 5rem;
 `;
-const Monda2 = styled(Header)`
+const HeaderContainer = styled(Header)`
   background: #f5f5f5;
 `;
-const Monda3 = styled(Footer)`
+const FooterContainer = styled(Footer)`
   background: #f5f5f5;
 `;
 
 const LayoutApp = ({ children }) => {
   return (
     <Layout>
-      <Monda2>
+      <HeaderContainer>
         <Navbar />
-      </Monda2>
-      <Monda>{children}</Monda>
-      <Monda3>
+      </HeaderContainer>
+      <MainContainer>{children}</MainContainer>
+      <FooterContainer>
         <FooterB />
-      </Monda3>
+      </FooterContainer>
     </Layout>
   );
 };
