@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "antd";
-import { CloseOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons"; //CloseOutlined, 
 
 const EjercicioCard = styled.div`
   color: #65737e;
@@ -50,16 +50,16 @@ const EjercicioItem = ({ datos }) => {
   return (
     <EjercicioCard>
       <EjerciciosNameDiv>
-        <EjercicioName>{datos.nombre}</EjercicioName>
+        <EjercicioName>{datos.name}</EjercicioName>
       </EjerciciosNameDiv>
       <EjerciciosTimeDiv>
         {" "}
-        <EjercicioTime>{datos.duration} segundos</EjercicioTime>{" "}
+        <EjercicioTime>{datos.seconds} segundos</EjercicioTime>{" "}
       </EjerciciosTimeDiv>
 
       <EjerciciosButtonsDiv>
         <Button style={{marginRight: "5px"}} type="primary" shape="circle" icon={<EditOutlined />} />
-        <Button style={{marginRight: "5px"}} type="danger" shape="circle" icon={<CloseOutlined />} />
+        {/* <Button style={{marginRight: "5px"}} type="danger" shape="circle" icon={<CloseOutlined />} /> */}
       </EjerciciosButtonsDiv>
     </EjercicioCard>
   );

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { ImportOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/dumbbell.svg";
+import AuthContext from "../context/autenticacion/authContext";
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -49,6 +50,9 @@ const NavCSOption = styled(Link)`
 `;
 
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+  const { cerrarSesion } = authContext;
+
   return (
     <NavbarContainer>
       <NavigationButtons>
@@ -59,7 +63,7 @@ const Navbar = () => {
         <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
       </NavigationButtons>
 
-      <NavCSOption to={"/login"}>
+      <NavCSOption to={"/login"} onClick={() => cerrarSesion()}>
         <ImportOutlined /> Cerrar Sesión
       </NavCSOption>
     </NavbarContainer>

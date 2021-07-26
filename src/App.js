@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; //Red
 
 import "./index.css";
 
- import ExerciseState from "./context/ejercicios/exerciseState";
- import AuthState from "./context/autenticacion/authState";
- import TabattaState from "./context/tabatta/tabattaState";
+import ExerciseState from "./context/ejercicios/exerciseState";
+import AuthState from "./context/autenticacion/authState";
+import TabattaState from "./context/tabatta/tabattaState";
 
 import Home from "./views/home/Home";
 import Login from "./views/login/Login";
@@ -16,20 +16,20 @@ import Tabatta from "./views/tabatta/Tabatta";
 
 const App = () => {
   return (
-     <AuthState>
-      {/* <TabattaState>
-       <ExerciseState> */}
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/tabatta" component={Tabatta} />
-      </Switch>
-    </Router>
-         {/* </ExerciseState>
-       </TabattaState> */}
-     </AuthState>
+    <AuthState>
+      <TabattaState>
+        <ExerciseState>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/tabatta" component={Tabatta} />
+          </Switch>
+        </Router>
+        </ExerciseState>
+      </TabattaState>
+    </AuthState>
   );
 };
 

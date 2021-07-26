@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { RightOutlined } from "@ant-design/icons";
+import TabattaContext from "../../../context/tabatta/tabattaContext";
 
 const ListContainer = styled.div`
   padding: 1rem 0;
@@ -26,14 +27,18 @@ const ItemText = styled.span`
 `;
 
 const TabattaList = ({ listaTabatta }) => {
+  const tabattaContext = useContext(TabattaContext);
+  const { obtenerTabattaID } = tabattaContext;
+
   const handleSearchTabatta = (idTabatta) => {
-    console.log(idTabatta);
+    obtenerTabattaID(idTabatta);
   };
+
   return (
     <ListContainer>
       {listaTabatta.map((r) => (
-        <ItemList key={r.id} onClick={() => handleSearchTabatta(r.id)}>
-          <ItemText>{r.nombre}</ItemText>
+        <ItemList key={r._id} onClick={() => handleSearchTabatta(r._id)}>
+          <ItemText>{r.name}</ItemText>
           <RightOutlined />
         </ItemList>
       ))}

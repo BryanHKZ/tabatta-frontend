@@ -6,8 +6,6 @@ import gym from '../../assets/gym.svg'
 import AuthContext from '../../context/autenticacion/authContext'
 import Error from '../register/Error.js'
 
-
-
 const Login = (props) => {
 
     const authContext = useContext(AuthContext);

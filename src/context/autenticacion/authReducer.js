@@ -1,41 +1,45 @@
- import {
-   OBTENER_USUARIO,
-   CERRAR_SESION,
-   LOGIN_ERROR,
-   LOGIN_EXITOSO,
-   REGISTRO_ERROR,
-   REGISTRO_EXITOSO,
- } from "../../types";
+import {
+  OBTENER_USUARIO,
+  CERRAR_SESION,
+  LOGIN_ERROR,
+  LOGIN_EXITOSO,
+  REGISTRO_ERROR,
+  REGISTRO_EXITOSO,
+} from "../../types";
 
 export const AuthReducer = (state, action) => {
-  switch(action.type) {
-
+  switch (action.type) {
     case LOGIN_EXITOSO:
-    case REGISTRO_EXITOSO: 
-    localStorage.setItem('token', action.payload.token)
-      return{
+    case REGISTRO_EXITOSO:
+      localStorage.setItem("token", action.payload.token);
+      return {
         ...state,
-        autenticado:true,
-        mensaje:null,
-        error:null
-      }
+        usuario: action.payload.user,
+        autenticado: true,
+        mensaje: null,
+        error: null,
+      };
 
-      case OBTENER_USUARIO: 
-      return{
-          ...state,
-          autenticado:true,
-          usuario: action.payload
-      }
-
-      case LOGIN_ERROR: 
-      case REGISTRO_ERROR: 
-      return{
+    case OBTENER_USUARIO:
+      return {
         ...state,
-        error:true
-      }
+        autenticado: true,
+        usuario: action.payload,
+      };
 
-    
+    case LOGIN_ERROR:
+    case REGISTRO_ERROR:
+      return {
+        ...state,
+        error: true,
+      };
+    case CERRAR_SESION:
+      return {
+        ...state,
+        autenticado: null,
+      };
+
     default:
       return state;
   }
-}
+};

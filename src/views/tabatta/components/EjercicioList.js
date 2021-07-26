@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button } from "antd";
-import exampleData from "../../../utils/data.json";
 import EjercicioItem from "./EjercicioItem";
 import NuevoEjercicioModal from "./NuevoEjercicioModal";
+import EditarTabattaModal from "./EditarTabattaModal";
 import { PlusCircleOutlined } from "@ant-design/icons";
+
+import TabattaContext from "../../../context/tabatta/tabattaContext";
+import ExerciseContext from "../../../context/ejercicios/exerciseContext";
 
 const Container = styled.section`
   display: flex;
@@ -13,7 +16,6 @@ const Container = styled.section`
   width: 75%;
   background: #fafafa;
 `;
-
 const TitleDiv = styled.div`
   display: flex;
   text-align: center;
@@ -21,13 +23,11 @@ const TitleDiv = styled.div`
   justify-content: center;
   margin: 0.5rem;
 `;
-
 const Title = styled.h1`
   font-weight: 700;
   font-size: 1.6rem;
   color: #65737e;
 `;
-
 const TabattaInfo = styled.div`
   display: flex;
   text-align: left;
@@ -39,7 +39,6 @@ const TabattaInfo = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 `;
-
 const TabattaExercises = styled.div`
   display: flex;
   justify-content: center;
@@ -48,18 +47,15 @@ const TabattaExercises = styled.div`
   padding: 1rem 0;
   align-items: center;
 `;
-
 const TabattaInfoContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
 `;
-
 const InfoLabel = styled.span`
   margin-right: 3px;
   color: #65737e;
 `;
-
 const EjerciciosContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,43 +63,77 @@ const EjerciciosContainer = styled.div`
 `;
 
 const EjercicioList = () => {
-  const [exerciseList, setExerciseList] = useState(
-    exampleData.ejercicio.filter((r) => r.routineId === 2)
-  );
+  const [showInfo, setShowInfo] = useState(false);
   const [showNewExercise, setShowNewExercise] = useState(false);
+  const [showEditTabatta, setShowEditTabatta] = useState(false);
+  const [tabattaDuration, setTabattaDuration] = useState(0);
+
+  const [updateList, setUpdateList] = useState(false);
+
+  const tabattaContext = useContext(TabattaContext);
+  const { selectedTabatta, eliminarTabatta } = tabattaContext;
+
+  const exerciseContext = useContext(ExerciseContext);
+  const { obtenerEjerciciosTabatta, exerciseList } = exerciseContext;
 
   const handleNewExercise = () => {
     setShowNewExercise(true);
   };
 
-  return (
+  useEffect(() => {
+    if (selectedTabatta) {
+      obtenerEjerciciosTabatta(selectedTabatta._id);
+      setShowInfo(true);
+    }
+    // eslint-disable-next-line
+  }, [selectedTabatta, updateList]);
+
+  const handleDeleteTabatta = () => {
+    setShowInfo(false);
+
+    setTimeout(() => {
+      eliminarTabatta(selectedTabatta._id);
+    }, 500);
+  };
+
+  const handleEditTabatta = () => {
+    setShowEditTabatta(true);
+  };
+
+  return showInfo ? (
     <Container>
       <TitleDiv>
-        <Title> Rutina de Patas </Title>
+        <Title> {selectedTabatta.name} </Title>
       </TitleDiv>
       <TabattaInfo>
         <TabattaInfoContent>
           <InfoLabel>
-            <strong>Duración Total:</strong> 5:01
-          </InfoLabel>
-          <InfoLabel>
-            <strong>Ciclos:</strong> 8
-          </InfoLabel>
-          <InfoLabel>
-            <strong>Sets:</strong> 2{" "}
-          </InfoLabel>
-          <InfoLabel>
-            <strong>Descanso entre sets:</strong> 10 segs
+            {exerciseList ? (
+              <span>
+                <strong>Duración Total:</strong>{" "}
+                {exerciseList.totalDuration} segundos
+              </span>
+            ) : null}
           </InfoLabel>
         </TabattaInfoContent>
         <TabattaInfoContent>
           <Button className="action-button" size="small" type="default">
             Iniciar Tabatta
           </Button>
-          <Button className="action-button" size="small" type="primary">
+          <Button
+            className="action-button"
+            size="small"
+            type="primary"
+            onClick={handleEditTabatta}
+          >
             Editar Tabatta
           </Button>
-          <Button className="action-button" size="small" type="danger">
+          <Button
+            className="action-button"
+            size="small"
+            type="danger"
+            onClick={handleDeleteTabatta}
+          >
             Eliminar Tabatta
           </Button>
         </TabattaInfoContent>
@@ -112,9 +142,11 @@ const EjercicioList = () => {
       <TabattaExercises>
         <Title>Lista de Ejercicios</Title>
         <EjerciciosContainer>
-          {exerciseList.map((e) => (
-            <EjercicioItem datos={e} key={e.id} />
-          ))}
+          {exerciseList
+            ? exerciseList.exercises.map((e) => (
+                <EjercicioItem datos={e} key={e._id} />
+              ))
+            : null}
         </EjerciciosContainer>
         <Button
           className="button-ae"
@@ -127,8 +159,17 @@ const EjercicioList = () => {
         <NuevoEjercicioModal
           visible={showNewExercise}
           setShowNewExercise={setShowNewExercise}
+          setUpdateList={setUpdateList}
+        />
+        <EditarTabattaModal
+          visible={showEditTabatta}
+          setShowEditTabatta={setShowEditTabatta}
         />
       </TabattaExercises>
+    </Container>
+  ) : (
+    <Container>
+      <Title> Selecciona un Tabatta </Title>
     </Container>
   );
 };

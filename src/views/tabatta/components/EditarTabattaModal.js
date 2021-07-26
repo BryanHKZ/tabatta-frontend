@@ -9,34 +9,27 @@ const SearchLabel = styled.label`
   line-height: normal;
 `;
 
-const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
+const NuevoTabattaModal = ({ visible, setShowEditTabatta }) => {
+  const tabattaContext = useContext(TabattaContext);
+  const { selectedTabatta, editarTabatta } = tabattaContext;
+
   const [tabattaData, setTabattaData] = useState({
-    name: "",
+    name: selectedTabatta.name,
   });
 
   const { name } = tabattaData;
 
-  const tabattaContext = useContext(TabattaContext);
-  const { crearTabatta, obtenerTabattas } = tabattaContext;
-
   const handleOk = () => {
-    setShowNewTabatta(false);
-    crearTabatta({ name });
-    obtenerTabattas();
-    setTabattaData({
-      name: "",
-    });
+    setShowEditTabatta(false);
+    editarTabatta(selectedTabatta._id, { name });
   };
   const handleCancel = () => {
-    setShowNewTabatta(false);
-    setTabattaData({
-      name: "",
-    });
+    setShowEditTabatta(false);
   };
 
   const handleOnChange = (e) => {
-    setTabattaData({ ...tabattaData, [e.target.name]: e.target.value })
-  }
+    setTabattaData({ ...tabattaData, [e.target.name]: e.target.value });
+  };
   return (
     <Modal
       title="Crear Nuevo Tabatta"

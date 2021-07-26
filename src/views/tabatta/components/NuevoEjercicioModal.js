@@ -1,29 +1,46 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Input, Slider } from "antd";
 import styled from "@emotion/styled";
+import ExerciseContext from "../../../context/ejercicios/exerciseContext";
+import TabattaContext from "../../../context/tabatta/tabattaContext";
 
 const SearchLabel = styled.label`
   font-size: 0.8rem;
   line-height: normal;
 `;
 
-const NuevoEjercicioModal = ({ visible, setShowNewExercise }) => {
+const NuevoEjercicioModal = ({
+  visible,
+  setShowNewExercise,
+  setUpdateList,
+}) => {
   const [exerciseData, setExerciseData] = useState({
     name: "",
     seconds: 0,
-    routine: "",
   });
+
+  const exerciseContext = useContext(ExerciseContext);
+  const { createExercise } = exerciseContext;
+
+  const tabattaContext = useContext(TabattaContext);
+  const { selectedTabatta } = tabattaContext;
+
   const handleOk = () => {
-    console.log("Confirmar datos");
+    exerciseData.routine = selectedTabatta._id;
+    createExercise(exerciseData);
+    setUpdateList(true);
     setShowNewExercise(false);
-    // To-Do CreateTabatta
     setExerciseData({ name: "", seconds: 0, routine: "" });
   };
+
   const handleCancel = () => {
-    console.log("cancelar");
     setShowNewExercise(false);
     setExerciseData({ name: "", seconds: 0, routine: "" });
   };
+
+  // useEffect(() => {
+  //   obtenerEjerciciosTabatta(routineId);
+  // }, [visible]);
   return (
     <Modal
       title="Crear Nuevo Ejercicio"
@@ -41,7 +58,7 @@ const NuevoEjercicioModal = ({ visible, setShowNewExercise }) => {
         onChange={(e) =>
           setExerciseData({ ...exerciseData, [e.target.name]: e.target.value })
         }
-        style={{marginBottom: "10px"}}
+        style={{ marginBottom: "10px" }}
       />
 
       <SearchLabel htmlFor="new-tabatta">
