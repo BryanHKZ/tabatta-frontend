@@ -6,9 +6,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
-// import ExerciseState from "./context/ejercicios/exerciseState";
-// import AuthState from "./context/autenticacion/authState";
-// import TabattaState from "./context/tabatta/tabattaState";
+ import ExerciseState from "./context/ejercicios/exerciseState";
+ import AuthState from "./context/autenticacion/authState";
+ import TabattaState from "./context/tabatta/tabattaState";
 
 import Home from "./views/home/Home";
 import Login from "./views/login/Login";
@@ -18,9 +18,9 @@ import Register from "./views/register/Register";
 
 const App = () => {
   return (
-    // <AuthState>
-    //   <TabattaState>
-    //     <ExerciseState>
+     <AuthState>
+      {/* <TabattaState>
+       <ExerciseState> */}
     <Router>
       <Switch>
         <Route
@@ -40,9 +40,9 @@ const App = () => {
         />
       </Switch>
     </Router>
-    //     </ExerciseState>
-    //   </TabattaState>
-    // </AuthState>
+         {/* </ExerciseState>
+       </TabattaState> */}
+     </AuthState>
   );
 };
 
