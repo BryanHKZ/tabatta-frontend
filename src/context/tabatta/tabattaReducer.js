@@ -7,7 +7,8 @@ import {
   OBTENER_TABATTAS_EXITO,
   OBTENER_TABATTA_XID,
   ELIMINAR_TABATTA,
-  EDITAR_TABATTA
+  EDITAR_TABATTA,
+  ELIMINAR_TABATTA_SELECCIONADO
 } from "../../types";
 
 export const TabattaReducer = (state, action) => {
@@ -32,6 +33,11 @@ export const TabattaReducer = (state, action) => {
         ...state,
         selectedTabatta: action.payload
       }
+    case ELIMINAR_TABATTA_SELECCIONADO: 
+    return {
+      ...state,
+      selectedTabatta: null
+    }
     default:
       return state;
   }

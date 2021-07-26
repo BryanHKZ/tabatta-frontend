@@ -11,7 +11,7 @@ import {
   OBTENER_TABATTA_XID,
   OBTENER_TABATTA_XID_ERROR,
   ELIMINAR_TABATTA,
-  ELIMINAR_TABATTA_ERROR,
+  ELIMINAR_TABATTA_SELECCIONADO,
   EDITAR_TABATTA
 } from "../../types";
 
@@ -97,6 +97,12 @@ const TabattaState = (props) => {
     }
   }
 
+  const eliminarTabattaSeleccionado = () => {
+    dispatch({
+      type: ELIMINAR_TABATTA_SELECCIONADO
+    })
+  }
+
   return (
     <TabattaContext.Provider
       value={{
@@ -106,7 +112,8 @@ const TabattaState = (props) => {
         crearTabatta,
         obtenerTabattaID,
         eliminarTabatta,
-        editarTabatta
+        editarTabatta,
+        eliminarTabattaSeleccionado
       }}
     >
       {props.children}

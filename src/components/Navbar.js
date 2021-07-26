@@ -4,6 +4,7 @@ import { ImportOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/dumbbell.svg";
 import AuthContext from "../context/autenticacion/authContext";
+import TabattaContext from "../context/tabatta/tabattaContext"
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -53,6 +54,14 @@ const Navbar = () => {
   const authContext = useContext(AuthContext);
   const { cerrarSesion } = authContext;
 
+  const tabattaContext = useContext(TabattaContext);
+  const {eliminarTabattaSeleccionado} = tabattaContext;
+
+  const handleCerrarSesion = () => {
+    cerrarSesion()
+    eliminarTabattaSeleccionado()
+  }
+
   return (
     <NavbarContainer>
       <NavigationButtons>
@@ -63,7 +72,7 @@ const Navbar = () => {
         <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
       </NavigationButtons>
 
-      <NavCSOption to={"/"} onClick={() => cerrarSesion()}>
+      <NavCSOption to={"/"} onClick={handleCerrarSesion}>
         <ImportOutlined /> Cerrar Sesión
       </NavCSOption>
     </NavbarContainer>
