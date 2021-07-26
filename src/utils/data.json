@@ -1,0 +1,19 @@
+{
+  "homeInfo": [
+    {"nombre": "Arms", "id": 1, "descripcion": "Lorem Ipsum Dolor Sit Amet."},
+    {"nombre": "Legs", "id": 2, "descripcion": "Lorem Ipsum Dolor Sit Amet."},
+    {"nombre": "Yoga", "id": 3, "descripcion": "Lorem Ipsum Dolor Sit Amet."},
+    {"nombre": "Back", "id": 4, "descripcion": "Lorem Ipsum Dolor Sit Amet."}
+  ],
+  "routine": [
+    {"nombre": "Rutina de Brazos", "id": 1},
+    {"nombre": "Tabatta de Piernas", "id": 2}
+  ],
+  "ejercicio": [
+    {"nombre": "Sentadillas", "id": 1, "routineId": 2, "duration": 20},
+    {"nombre": "Levantamiento de Pesas", "id": 1, "routineId": 1, "duration": 30},
+    {"nombre": "Estiramiento", "id": 3, "routineId": 2, "duration": 25},
+    {"nombre": "Salto de Cuerda", "id": 4, "routineId": 1, "duration": 20},
+    {"nombre": "Flexiones de Pecho", "id": 5, "routineId": 1, "duration": 10}
+  ]
+}
