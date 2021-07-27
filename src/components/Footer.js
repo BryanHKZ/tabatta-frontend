@@ -6,7 +6,7 @@ const FooterContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: #65737e;
-  font-weight: 500;
+  font-weight: 700;
 `;
 const Footer = () => {
   return (

@@ -59,9 +59,10 @@ const TabattaState = (props) => {
 
   const crearTabatta = async (datos) => {
     try {
-      await clienteAxios.post("/api/routine", datos);
+      const res = await clienteAxios.post("/api/routine", datos);
       dispatch({
         type: CREAR_TABATTA,
+        payload: res.data
       });
       obtenerTabattas();
     } catch (error) {

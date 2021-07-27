@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Modal, Input, Slider } from "antd";
 import styled from "@emotion/styled";
-import ExerciseContext from "../../../context/ejercicios/exerciseContext";
-import TabattaContext from "../../../context/tabatta/tabattaContext";
+import ExerciseContext from "../../context/ejercicios/exerciseContext";
+import TabattaContext from "../../context/tabatta/tabattaContext";
 
 const SearchLabel = styled.label`
   font-size: 0.8rem;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "@emotion/styled";
 import TabattaList from "./TabattaList";
-import NuevoTabattaModal from "./NuevoTabattaModal";
+import NuevoTabattaModal from "../../modals/NuevoTabattaModal";
 
 import AuthContext from "../../../context/autenticacion/authContext";
 import TabattaContext from "../../../context/tabatta/tabattaContext";

@@ -86,7 +86,7 @@ const AuthState = (props) => {
   };
 
   const cerrarSesion = async () => {
-    localStorage.removeItem("token");
+    
     dispatch({
       type: CERRAR_SESION,
     });
@@ -101,6 +101,7 @@ const AuthState = (props) => {
         registerUser,
         login,
         cerrarSesion,
+        usuarioAutenticado
       }}
     >
       {props.children}

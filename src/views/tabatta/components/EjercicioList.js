@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button } from "antd";
-import EjercicioItem from "./EjercicioItem";
-import NuevoEjercicioModal from "./NuevoEjercicioModal";
-import EditarTabattaModal from "./EditarTabattaModal";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import EjercicioItem from "./EjercicioItem";
+import NuevoEjercicioModal from "../../modals/NuevoEjercicioModal";
+import EditarTabattaModal from "../../modals/EditarTabattaModal";
+import EjecutarTabatta from "../../modals/EjecutarTabatta";
 
 import TabattaContext from "../../../context/tabatta/tabattaContext";
 import ExerciseContext from "../../../context/ejercicios/exerciseContext";
@@ -66,7 +67,7 @@ const EjercicioList = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showNewExercise, setShowNewExercise] = useState(false);
   const [showEditTabatta, setShowEditTabatta] = useState(false);
-  const [tabattaDuration, setTabattaDuration] = useState(0);
+  const [showStartTabatta, setShowStartTabatta] = useState(false);
 
   const [updateList, setUpdateList] = useState(false);
 
@@ -100,6 +101,10 @@ const EjercicioList = () => {
     setShowEditTabatta(true);
   };
 
+  const handleStartTabatta = () => {
+    setShowStartTabatta(true);
+  };
+
   return showInfo ? (
     <Container>
       <TitleDiv>
@@ -110,14 +115,19 @@ const EjercicioList = () => {
           <InfoLabel>
             {exerciseList ? (
               <span>
-                <strong>Duración Total:</strong>{" "}
-                {exerciseList.totalDuration} segundos
+                <strong>Duración Total:</strong> {exerciseList.totalDuration}{" "}
+                segundos
               </span>
             ) : null}
           </InfoLabel>
         </TabattaInfoContent>
         <TabattaInfoContent>
-          <Button className="action-button" size="small" type="default">
+          <Button
+            className="action-button"
+            size="small"
+            type="default"
+            onClick={handleStartTabatta}
+          >
             Iniciar Tabatta
           </Button>
           <Button
@@ -156,6 +166,17 @@ const EjercicioList = () => {
         >
           Agregar Ejercicio
         </Button>
+
+        {exerciseList ? (
+          <EjecutarTabatta
+            visible={showStartTabatta}
+            datosTabatta={selectedTabatta}
+            listaEjercicios={exerciseList.exercises}
+            tiempoEjercicios={exerciseList.totalDuration}
+            setShowStartTabatta={setShowStartTabatta}
+          />
+        ) : null}
+
         <NuevoEjercicioModal
           visible={showNewExercise}
           setShowNewExercise={setShowNewExercise}

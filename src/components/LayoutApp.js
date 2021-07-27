@@ -10,7 +10,7 @@ const { Header, Footer, Content } = Layout;
 const MainContainer = styled(Content)`
   min-height: 100vh;
   background: white;
-  padding: 0 5rem;
+  padding: 0 0;
 `;
 const HeaderContainer = styled(Header)`
   background: #f5f5f5;

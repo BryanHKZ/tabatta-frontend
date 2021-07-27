@@ -3,14 +3,7 @@ import ExerciseContext from "./exerciseContext";
 import { ExerciseReducer } from "./exerciseReducer";
 import clienteAxios from "../../config/axios";
 
-import {
-  AGREGAR_EJERCICIO,
-  AGREGAR_EJERCICIO_ERROR,
-  AGREGAR_EJERCICIO_EXITO,
-  OBTENER_EJERCICIOS_TABATTA,
-  OBTENER_EJERCICIOS_TABATTA_ERROR,
-  OBTENER_EJERCICIOS_TABATTA_EXITO,
-} from "../../types";
+import { AGREGAR_EJERCICIO, OBTENER_EJERCICIOS_TABATTA } from "../../types";
 
 const ExerciseState = (props) => {
   const initialState = {
@@ -21,14 +14,12 @@ const ExerciseState = (props) => {
   const [state, dispatch] = useReducer(ExerciseReducer, initialState);
 
   const obtenerEjerciciosTabatta = async (tabattaId) => {
-    console.log(tabattaId);
     try {
       const res = await clienteAxios.get(`/api/exercise/${tabattaId}`);
-      console.log(res.data)
       dispatch({
         type: OBTENER_EJERCICIOS_TABATTA,
-        payload: res.data
-      })
+        payload: res.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -36,18 +27,33 @@ const ExerciseState = (props) => {
 
   const createExercise = async (datos) => {
     try {
-      await clienteAxios.post("/api/exercise", datos)
+      const res = await clienteAxios.post("/api/exercise", datos);
+      dispatch({
+        type: AGREGAR_EJERCICIO,
+        payload: res.data.exercise,
+      });
+      obtenerEjerciciosTabatta(res.data.exercise.routine);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const editarEjercicio = async (exerciseId, datos) => {
+    try {
+      const res = await clienteAxios.put(`/api/exercise/${exerciseId}`, datos);
+      obtenerEjerciciosTabatta(res.data.exercise.routine);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ExerciseContext.Provider
       value={{
         exerciseList: state.exerciseList,
         obtenerEjerciciosTabatta,
-        createExercise
+        createExercise,
+        editarEjercicio,
       }}
     >
       {props.children}

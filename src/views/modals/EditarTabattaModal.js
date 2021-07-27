@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Modal, Input } from "antd";
 import styled from "@emotion/styled";
 
-import TabattaContext from "../../../context/tabatta/tabattaContext";
+import TabattaContext from "../../context/tabatta/tabattaContext";
 
 const SearchLabel = styled.label`
   font-size: 0.8rem;
@@ -32,16 +32,16 @@ const NuevoTabattaModal = ({ visible, setShowEditTabatta }) => {
   };
   return (
     <Modal
-      title="Crear Nuevo Tabatta"
+      title="Editar Tabatta"
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
       cancelText="Cancelar"
     >
-      <SearchLabel htmlFor="new-tabatta">Nombre del Tabatta</SearchLabel>
+      <SearchLabel htmlFor="edit-tabatta">Nuevo nombre del Tabatta</SearchLabel>
       <Input
         placeholder="ex: Pecho"
-        id="new-tabatta"
+        id="edit-tabatta"
         name="name"
         value={name}
         onChange={handleOnChange}

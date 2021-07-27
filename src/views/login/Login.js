@@ -15,6 +15,7 @@ const Login = (props) => {
       if(autenticado){
         props.history.push('/home')
       }
+      // eslint-disable-next-line
     }, [autenticado]);
 
   const [user, setUser] = useState({
@@ -56,7 +57,7 @@ const Login = (props) => {
     <div>
       <Row>
         <Col span={12} className='left login_col'>
-        <img src={gym} className='image'/>
+        <img src={gym} alt="gym" className='image'/>
         </Col>
 
         <Col span={12} >

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { Button } from "antd";
-import { EditOutlined } from "@ant-design/icons"; //CloseOutlined, 
+import { EditOutlined } from "@ant-design/icons"; //CloseOutlined,
+import EditarEjercicioModal from "../../modals/EditarEjercicioModal";
 
 const EjercicioCard = styled.div`
   color: #65737e;
@@ -47,6 +48,12 @@ const EjerciciosButtonsDiv = styled.div`
   justify-content: flex-end;
 `;
 const EjercicioItem = ({ datos }) => {
+  const [showEditExercise, setShowEditExercise] = useState(false);
+
+  const handleEditExercise = () => {
+    setShowEditExercise(true);
+  };
+
   return (
     <EjercicioCard>
       <EjerciciosNameDiv>
@@ -58,8 +65,19 @@ const EjercicioItem = ({ datos }) => {
       </EjerciciosTimeDiv>
 
       <EjerciciosButtonsDiv>
-        <Button style={{marginRight: "5px"}} type="primary" shape="circle" icon={<EditOutlined />} />
+        <Button
+          style={{ marginRight: "5px" }}
+          type="primary"
+          shape="circle"
+          icon={<EditOutlined />}
+          onClick={handleEditExercise}
+        />
         {/* <Button style={{marginRight: "5px"}} type="danger" shape="circle" icon={<CloseOutlined />} /> */}
+        <EditarEjercicioModal
+          visible={showEditExercise}
+          setShowEditExercise={setShowEditExercise}
+          ejercicio={datos}
+        />
       </EjerciciosButtonsDiv>
     </EjercicioCard>
   );

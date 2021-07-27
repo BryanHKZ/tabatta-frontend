@@ -109,15 +109,15 @@ const Register = (props) => {
             <Button className="button2" type="primary" onClick={onSubmit}>
               Register
             </Button>
-            <br /> <br />
-            <Link to={"/login"} className="link">
+            <br /><br />
+            <Link to={"/"} className="link">
               do you already have an account? , log in
             </Link>
           </form>
         </Col>
 
         <Col span={12} className="left login_col">
-          <img src={gym2} className="image" />
+          <img src={gym2} alt="gym2" className="image" />
         </Col>
       </Row>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Modal, Input } from "antd";
 import styled from "@emotion/styled";
 
-import TabattaContext from "../../../context/tabatta/tabattaContext";
+import TabattaContext from "../../context/tabatta/tabattaContext";
 
 const SearchLabel = styled.label`
   font-size: 0.8rem;

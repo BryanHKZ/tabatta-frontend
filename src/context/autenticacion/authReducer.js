@@ -12,6 +12,7 @@ export const AuthReducer = (state, action) => {
     case LOGIN_EXITOSO:
     case REGISTRO_EXITOSO:
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("autenticado", "true");
       return {
         ...state,
         usuario: action.payload.user,
@@ -34,6 +35,8 @@ export const AuthReducer = (state, action) => {
         error: true,
       };
     case CERRAR_SESION:
+      localStorage.removeItem("token");
+      localStorage.removeItem("autenticado");
       return {
         ...state,
         autenticado: null,

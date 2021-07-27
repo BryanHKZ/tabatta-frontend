@@ -11,8 +11,7 @@ import Home from "./views/home/Home";
 import Login from "./views/login/Login";
 import Register from "./views/register/Register";
 import Tabatta from "./views/tabatta/Tabatta";
-
-// const token = localStorage.getItem("token");
+import RutaPrivada from "./views/rutas/RutaPrivada"
 
 const App = () => {
   return (
@@ -24,7 +23,7 @@ const App = () => {
             <Route exact path="/home" component={Home} />
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/tabatta" component={Tabatta} />
+            <RutaPrivada exact path="/tabatta" component={Tabatta} />
           </Switch>
         </Router>
         </ExerciseState>
