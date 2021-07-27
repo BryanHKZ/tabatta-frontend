@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Modal, Input } from "antd";
+import { Modal, Input, Slider } from "antd";
 import styled from "@emotion/styled";
 
 import TabattaContext from "../../context/tabatta/tabattaContext";
@@ -12,25 +12,31 @@ const SearchLabel = styled.label`
 const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
   const [tabattaData, setTabattaData] = useState({
     name: "",
+    rest: 0,
+    preparation: 0
   });
 
-  const { name } = tabattaData;
+  const { name, preparation, rest } = tabattaData;
 
   const tabattaContext = useContext(TabattaContext);
   const { crearTabatta, obtenerTabattas } = tabattaContext;
 
   const handleOk = () => {
     setShowNewTabatta(false);
-    crearTabatta({ name });
+    crearTabatta({ name, preparation, break: rest });
     obtenerTabattas();
     setTabattaData({
       name: "",
+      preparation: 0,
+      rest: 0
     });
   };
   const handleCancel = () => {
     setShowNewTabatta(false);
     setTabattaData({
       name: "",
+      preparation: 0,
+      rest: 0
     });
   };
 
@@ -52,6 +58,28 @@ const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
         name="name"
         value={name}
         onChange={handleOnChange}
+      />
+      <SearchLabel>
+        Tiempo de Preparación (En Segundos)
+      </SearchLabel>
+      <Slider
+        defaultValue={0}
+        max={60}
+        value={tabattaData.preparation}
+        onChange={(value) => {
+          setTabattaData({ ...tabattaData, preparation: value });
+        }}
+      />
+      <SearchLabel>
+        Tiempo de Descanso (En Segundos)
+      </SearchLabel>
+      <Slider
+        defaultValue={0}
+        max={60}
+        value={tabattaData.rest}
+        onChange={(value) => {
+          setTabattaData({ ...tabattaData, rest: value });
+        }}
       />
     </Modal>
   );

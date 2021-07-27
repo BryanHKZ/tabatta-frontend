@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import styled from "@emotion/styled";
 
@@ -7,22 +7,30 @@ const Container = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const ExerciseTitle = styled.div`
   display: flex;
+  width: 100;
   justify-content: center;
   align-items: center;
+  padding: 3rem 0;
+  text-align: center;
+  font-size: 2.5rem;
 `;
 
 const ExerciseTimes = styled.div`
   text-align: center;
 `;
 
-const ExerciseTime = styled.h4``;
+const ExerciseTime = styled.h4`
+  font-size: 1.7rem;
+`;
 
 const TabattaTime = styled.h2`
   line-height: 20px;
+  font-size: 2rem;
 `;
 
 const EjecutarTabatta = ({
@@ -33,74 +41,99 @@ const EjecutarTabatta = ({
   setShowStartTabatta,
 }) => {
   let intervalEjercicio = null,
-    intervalTotal = null;
-  const [datosMostrar, setDatosMostrar] = useState({
-    ejercicioNombre: "",
-    tiempoEjercicio: "0:00",
-    tiempoRonda: "0:00",
-  });
-  const [startTabatta, setStartTabatta] = useState(false);
-  const [pauseTabatta, setPauseTabatta] = useState(false);
-  const [stopTabatta, setStopTabatta] = useState(false);
+    intervalTotal = null,
+    pauseTabatta = false,
+    vainas = listaEjercicios;
+
   const [btnText, setBtnText] = useState("Iniciar");
-
-  const { ejercicioNombre, tiempoEjercicio, tiempoRonda } = datosMostrar;
-
-  const series = 3,
-    rondas = 1;
   const preparationTime = {
     name: "Preparación",
-    seconds: 20,
+    seconds: datosTabatta.preparation,
   };
   const restTime = {
     name: "Descansando",
-    seconds: 15,
+    seconds: datosTabatta.break,
   };
 
   const formatTime = (ms) => {
     let toTimeFormat = new Date(ms);
-    console.log(toTimeFormat.getMinutes() + ":" + toTimeFormat.getSeconds());
     return toTimeFormat.getMinutes() + ":" + toTimeFormat.getSeconds();
   };
 
   const calcularTiempoTotal = () => {
-    let totalTime =
-      ((restTime.seconds + tiempoEjercicios) * series +
-        preparationTime.seconds) *
-      rondas;
-
-    return totalTime * 1000;
+    return tiempoEjercicios * 1000;
   };
 
-  const handleInit = () => {
-    listaEjercicios.unshift(preparationTime);
-    listaEjercicios.push(restTime);
-    if (!intervalEjercicio && !intervalTotal) {
+  let index = 0,
+    e = null,
+    tiempoTotal = 0;
+
+  const handleInit = function () {
+    if (!vainas.includes(preparationTime) || !vainas.includes(restTime)) {
+      tiempoTotal = calcularTiempoTotal();
+      vainas.unshift(preparationTime);
+      vainas.push(restTime);
+    }
+
+    if (btnText === "Iniciar" || btnText === "Continuar") {
       setBtnText("Pausar");
-    } else {
-      setBtnText("Iniciar")
+      pauseTabatta = false;
+    } else if (btnText === "Pausar") {
+      setBtnText("Continuar");
+      pauseTabatta = true;
+    }
+
+    if (!intervalEjercicio) {
+      intervalEjercicio = setInterval(() => {
+        if (index === vainas.length) {
+          index = 0;
+        }
+        e = vainas[index];
+
+        document.getElementById("nombre-ejercicio").innerHTML = e
+          ? e.name
+          : "null";
+        document.getElementById("tiempo-ejercicio").innerHTML =
+          "Tiempo Ejercicio: " + formatTime(e.seconds * 1000);
+
+        if (!pauseTabatta) {
+          e.seconds -= 1;
+        }
+
+        if (e.seconds <= 0) {
+          index++;
+        }
+      }, 1000);
+    }
+
+    if (!intervalTotal) {
+      intervalTotal = setInterval(() => {
+        document.getElementById("tiempo-ronda").innerHTML =
+          "Tiempo Ronda: " + formatTime(tiempoTotal);
+
+        if (!pauseTabatta) {
+          tiempoTotal -= 1000;
+        }
+        if (tiempoTotal <= 0) {
+          clearInterval(intervalEjercicio);
+          clearInterval(intervalTotal);
+          setBtnText("Iniciar");
+          document.getElementById("nombre-ejercicio").innerHTML = "null";
+          document.getElementById("tiempo-ejercicio").innerHTML =
+            "Tiempo Ejercicio: 0:00";
+          document.getElementById("tiempo-ronda").innerHTML =
+            "Tiempo Ejercicio: 0:00";
+        }
+      }, 1000);
     }
   };
 
-  const handleResume = () => {
-    setPauseTabatta(false);
-  };
-
-  const handlePause = () => {
-    setPauseTabatta(true);
-    clearInterval(intervalEjercicio);
-    clearInterval(intervalTotal);
-  };
-
   const handleStop = () => {
-    setStopTabatta(true);
-    clearInterval(intervalEjercicio);
-    clearInterval(intervalTotal);
+    setShowStartTabatta(false);
   };
 
   const handleClose = () => {
     handleStop();
-    setShowStartTabatta(false);
   };
 
   return (
@@ -110,9 +143,6 @@ const EjecutarTabatta = ({
       visible={visible}
       footer={[
         <Button onClick={handleInit}>{btnText}</Button>,
-        <Button className="resume" onClick={handleResume}>
-          Continuar
-        </Button>,
         <Button danger type="primary" onClick={handleStop}>
           Detener
         </Button>,
@@ -120,11 +150,13 @@ const EjecutarTabatta = ({
     >
       <Container>
         <ExerciseTitle>
-          <h1>{ejercicioNombre}</h1>
+          <h1 id="nombre-ejercicio">Presione Iniciar</h1>
         </ExerciseTitle>
         <ExerciseTimes>
-          <ExerciseTime>Tiempo Ejercicio: {tiempoEjercicio}</ExerciseTime>
-          <TabattaTime>Tiempo Ronda: {tiempoRonda}</TabattaTime>
+          <ExerciseTime id="tiempo-ejercicio">
+            Tiempo Ejercicio: 0:00
+          </ExerciseTime>
+          <TabattaTime id="tiempo-ronda">Tiempo Ronda: 0:00</TabattaTime>
         </ExerciseTimes>
       </Container>
     </Modal>
