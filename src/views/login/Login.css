@@ -1,57 +1,51 @@
-.left{
-    background-color: #147CF7;
-    
+.left {
+  background-color: #147cf7;
 }
 
-.login_col{
-    height: 100vh;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
+.login_col {
+  height: 100vh;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 
-.login_col input{
-    width: 60%;
+.login_col input {
+  width: 60%;
 }
 
-.login_pre{
-    display:flex;
-    flex-direction: column;
-    background-color: #F5F5F5;
+.login_pre {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
 }
 
-.label{
-    text-transform: uppercase;
-    padding-bottom: 20px;
-    font-weight: bold;
-    font-size: 25px;
-   
-
+.label {
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  font-weight: bold;
+  font-size: 25px;
 }
 
-.button{
-    background-color: #147CF7;
-    padding-top: 20px;
-    position: relative;
-    right: 145px;
-    width: 115px;
-}
-.button2{
-    background-color: #147CF7;
-    padding-top: 20px;
-    position: relative;
-    right: 130px;
-    width: 150px;
+.button {
+  background-color: #147cf7;
+  margin: 20px !important;
+  position: relative;
+  width: 115px;
 }
 
-.link{
-    position: relative;
-    right: 110px;
+.button2 {
+  background-color: #147cf7;
+  margin: 20px !important;
+  position: relative;
+  width: 115px;
 }
 
-.image{
-    width: 500px;
-    height: 500px;
+.image {
+  width: 500px;
+  height: 500px;
 }
 
-
+.google-button {
+  font-family: 'Montserrat', sans-serif !important;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%) !important;
+}

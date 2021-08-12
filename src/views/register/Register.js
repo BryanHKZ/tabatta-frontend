@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Row, Col, Input, Button } from "antd";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
 import "../login/Login.css";
 import gym2 from "../../assets/gym2.svg";
 import AuthContext from "../../context/autenticacion/authContext";
@@ -67,6 +68,23 @@ const Register = (props) => {
       password,
     });
   };
+
+  const responseGoogleSuccess = (response) => {
+    const obj = response.profileObj;
+    let toSend = {
+      name: obj.name,
+      email: obj.email,
+      sexo: "M",
+      password: response.tokenObj.login_hint,
+    };
+
+    registerUser(toSend);
+  };
+
+  const responseGoogleFailure = (response) => {
+    console.log(response.error);
+  };
+
   return (
     <div>
       <Row>
@@ -104,14 +122,22 @@ const Register = (props) => {
               value={confirm}
               onChange={handleChange}
             ></Input>
-            <br />
             {alerta ? <Error message={alerta} /> : null}
             <Button className="button2" type="primary" onClick={onSubmit}>
               Register
             </Button>
-            <br /><br />
+            <GoogleLogin
+              clientId="275579725547-svpsm1vug72l2imh3a2b2fgfjfevmsks.apps.googleusercontent.com"
+              buttonText="Registrarse con Google"
+              onSuccess={responseGoogleSuccess}
+              onFailure={responseGoogleFailure}
+              cookiePolicy={"single_host_origin"}
+              className="google-button"
+            />
+            <br />
+            <br />
             <Link to={"/"} className="link">
-              do you already have an account? , log in
+              ¿Ya tienes cuenta?, Inicia Sesión aquí
             </Link>
           </form>
         </Col>
