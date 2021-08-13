@@ -34,9 +34,10 @@ const Register = (props) => {
     password: "",
     confirm: "",
     sexo: "M",
+    number:""
   });
 
-  const { name, email, password, confirm, sexo } = user;
+  const { name, email, password, confirm, sexo, number } = user;
 
   const handleChange = (e) => {
     setUser({
@@ -52,7 +53,8 @@ const Register = (props) => {
       name.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
-      confirm.trim() === ""
+      confirm.trim() === "" ||
+      number.trim() === ""
     ) {
       mostrarAlerta("Todos los campos son obligatorios");
       return;
@@ -73,12 +75,13 @@ const Register = (props) => {
       email,
       sexo,
       password,
+      number,
     });
   };
 
   const responseGoogleSuccess = (response) => {
     const obj = response.profileObj;
-    if (error) {
+    if (alerta) {
       mostrarAlerta(alerta);
       return;
     }
@@ -116,6 +119,14 @@ const Register = (props) => {
               type="email"
               name="email"
               value={email}
+              onChange={handleChange}
+            ></Input>
+            <br />
+            <Input
+              placeholder="cellphone"
+              type="number"
+              name="number"
+              value={number}
               onChange={handleChange}
             ></Input>
             <br />

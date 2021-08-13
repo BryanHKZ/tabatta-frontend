@@ -23,7 +23,6 @@ const Login = (props) => {
 
     if(mensaje){
       mostrarAlerta(mensaje)
-      console.log(mensaje)
     }
     // eslint-disable-next-line
   }, [mensaje,autenticado]);
@@ -50,8 +49,8 @@ const Login = (props) => {
       return;
     }
 
-    if (error) {
-      mostrarAlerta("Usuario no existe");
+    if (alerta) {
+      mostrarAlerta(alerta);
       return;
     }
     login({ email, password });

@@ -2,7 +2,7 @@ import React, {useReducer} from 'react'
 import alertaReducer from './alertaReducer';
 import alertaContext from './alertaContext';
 
-import {MOSTRAR_ALERTA} from '../../types'
+import {MOSTRAR_ALERTA,OCULTAR_ALERTA} from '../../types'
 
 const AlertaState = props =>{
     const initialState ={
@@ -17,6 +17,12 @@ const AlertaState = props =>{
             payload:msg,
           
         });
+
+        setTimeout(() => {
+            dispatch({
+                type:OCULTAR_ALERTA
+            })
+        }, 5000);
 
     }
 

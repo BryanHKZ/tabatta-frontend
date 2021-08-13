@@ -1,4 +1,4 @@
-import { MOSTRAR_ALERTA } from "../../types";
+import { MOSTRAR_ALERTA,OCULTAR_ALERTA } from "../../types";
 
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +6,11 @@ const Reducer = (state, action) => {
       return {
         alerta: action.payload,
       };
+
+      case OCULTAR_ALERTA: 
+      return {
+          alerta:null
+      }
 
     default:
       return state;
