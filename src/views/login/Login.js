@@ -33,8 +33,6 @@ const Login = (props) => {
     password: "",
   });
 
-  const [alert, setAlert] = useState("");
-
   const { email, password } = user;
 
   const handleChange = (e) => {

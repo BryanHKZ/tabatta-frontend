@@ -21,7 +21,6 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     error: null,
-   
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -35,14 +34,13 @@ const AuthState = (props) => {
         type: REGISTRO_EXITOSO,
         payload: res.data,
       });
-      
 
       usuarioAutenticado();
     } catch (error) {
       console.log(error.response.data.msg);
       dispatch({
         type: REGISTRO_ERROR,
-        payload: error.response.data.msg
+        payload: error.response.data.msg,
       });
     }
   };
@@ -83,12 +81,10 @@ const AuthState = (props) => {
         type: LOGIN_ERROR,
         payload: error.response.data.msg,
       });
-      
     }
   };
 
   const cerrarSesion = async () => {
-    
     dispatch({
       type: CERRAR_SESION,
     });
@@ -104,7 +100,7 @@ const AuthState = (props) => {
         registerUser,
         login,
         cerrarSesion,
-        usuarioAutenticado
+        usuarioAutenticado,
       }}
     >
       {props.children}

@@ -1,34 +1,32 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Row, Col, Input, Button,Alert } from "antd";
+import { Row, Col, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import "../login/Login.css";
 import gym2 from "../../assets/gym2.svg";
-import Error from './Error'
+import Error from "./Error";
 import AuthContext from "../../context/autenticacion/authContext";
-import AlertaContext from "../../context/alertas/alertaContext"
+import AlertaContext from "../../context/alertas/alertaContext";
 
 const Register = (props) => {
-
   const alertaContext = useContext(AlertaContext);
-  const {alerta, mostrarAlerta} = alertaContext;
+  const { alerta, mostrarAlerta } = alertaContext;
 
   const authContext = useContext(AuthContext);
-  const { autenticado, registerUser,error,mensaje } = authContext;
+  const { autenticado, registerUser, error, mensaje } = authContext;
 
   useEffect(() => {
     if (autenticado) {
       props.history.push("/home");
     }
-   
-      if(mensaje){
-        mostrarAlerta(mensaje)
-        console.log(mensaje)
-      }
 
+    if (mensaje) {
+      mostrarAlerta(mensaje);
+      console.log(mensaje);
+    }
 
     // eslint-disable-next-line
-  }, [mensaje,autenticado]);
+  }, [mensaje, autenticado]);
 
   const [user, setUser] = useState({
     name: "",
@@ -38,7 +36,6 @@ const Register = (props) => {
     sexo: "M",
   });
 
-  
   const { name, email, password, confirm, sexo } = user;
 
   const handleChange = (e) => {
@@ -62,7 +59,7 @@ const Register = (props) => {
     }
 
     if (password.length < 8) {
-      mostrarAlerta("la contraseña debe contar con por lo menos 8 caracteres");
+      mostrarAlerta("la contraseña debe contar por lo menos con 8 caracteres");
       return;
     }
 
@@ -81,20 +78,20 @@ const Register = (props) => {
 
   const responseGoogleSuccess = (response) => {
     const obj = response.profileObj;
-   if(error){
-    mostrarAlerta(alerta);
-     return;
-   }
+    if (error) {
+      mostrarAlerta(alerta);
+      return;
+    }
 
-   let toSend = {
-    name: obj.name,
-    email: obj.email,
-    sexo: "M",
-    password: response.tokenObj.login_hint,
+    let toSend = {
+      name: obj.name,
+      email: obj.email,
+      sexo: "M",
+      password: response.tokenObj.login_hint,
+    };
+
+    registerUser(toSend);
   };
-
-  registerUser(toSend);
-};
 
   const responseGoogleFailure = (response) => {
     console.log(response.error);
@@ -137,7 +134,7 @@ const Register = (props) => {
               value={confirm}
               onChange={handleChange}
             ></Input>
-              {alerta ? (<Error message={alerta} />) :null}
+            {alerta ? <Error message={alerta} /> : null}
             <Button className="button2" type="primary" onClick={onSubmit}>
               Register
             </Button>
