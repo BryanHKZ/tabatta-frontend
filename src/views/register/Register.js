@@ -1,23 +1,34 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Row, Col, Input, Button } from "antd";
+import { Row, Col, Input, Button,Alert } from "antd";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import "../login/Login.css";
 import gym2 from "../../assets/gym2.svg";
+import Error from './Error'
 import AuthContext from "../../context/autenticacion/authContext";
-import Error from "./Error";
+import AlertaContext from "../../context/alertas/alertaContext"
 
 const Register = (props) => {
+
+  const alertaContext = useContext(AlertaContext);
+  const {alerta, mostrarAlerta} = alertaContext;
+
   const authContext = useContext(AuthContext);
-  const { autenticado, registerUser } = authContext;
+  const { autenticado, registerUser,error,mensaje } = authContext;
 
   useEffect(() => {
     if (autenticado) {
       props.history.push("/home");
     }
+   
+      if(mensaje){
+        mostrarAlerta(mensaje)
+        console.log(mensaje)
+      }
+
 
     // eslint-disable-next-line
-  }, [autenticado]);
+  }, [mensaje,autenticado]);
 
   const [user, setUser] = useState({
     name: "",
@@ -27,8 +38,7 @@ const Register = (props) => {
     sexo: "M",
   });
 
-  const [alerta, setAlerta] = useState("");
-
+  
   const { name, email, password, confirm, sexo } = user;
 
   const handleChange = (e) => {
@@ -47,17 +57,17 @@ const Register = (props) => {
       password.trim() === "" ||
       confirm.trim() === ""
     ) {
-      setAlerta("Todos los campos son obligatorios");
+      mostrarAlerta("Todos los campos son obligatorios");
       return;
     }
 
     if (password.length < 8) {
-      setAlerta("la contraseña debe contar con por lo menos 8 caracteres");
+      mostrarAlerta("la contraseña debe contar con por lo menos 8 caracteres");
       return;
     }
 
     if (password !== confirm) {
-      setAlerta("las contraseñas no coinciden");
+      mostrarAlerta("las contraseñas no coinciden");
       return;
     }
 
@@ -71,15 +81,20 @@ const Register = (props) => {
 
   const responseGoogleSuccess = (response) => {
     const obj = response.profileObj;
-    let toSend = {
-      name: obj.name,
-      email: obj.email,
-      sexo: "M",
-      password: response.tokenObj.login_hint,
-    };
+   if(error){
+    mostrarAlerta(alerta);
+     return;
+   }
 
-    registerUser(toSend);
+   let toSend = {
+    name: obj.name,
+    email: obj.email,
+    sexo: "M",
+    password: response.tokenObj.login_hint,
   };
+
+  registerUser(toSend);
+};
 
   const responseGoogleFailure = (response) => {
     console.log(response.error);
@@ -122,7 +137,7 @@ const Register = (props) => {
               value={confirm}
               onChange={handleChange}
             ></Input>
-            {alerta ? <Error message={alerta} /> : null}
+              {alerta ? (<Error message={alerta} />) :null}
             <Button className="button2" type="primary" onClick={onSubmit}>
               Register
             </Button>

@@ -5,18 +5,28 @@ import { GoogleLogin } from "react-google-login";
 import "./Login.css";
 import gym from "../../assets/gym.svg";
 import AuthContext from "../../context/autenticacion/authContext";
+import AlertaContext from "../../context/alertas/alertaContext"
 import Error from "../register/Error.js";
 
 const Login = (props) => {
+
+  const alertaContext = useContext(AlertaContext);
+  const {alerta, mostrarAlerta} = alertaContext;
+
   const authContext = useContext(AuthContext);
-  const { error, autenticado, login } = authContext;
+  const { error, autenticado, login,mensaje } = authContext;
 
   useEffect(() => {
     if (autenticado) {
       props.history.push("/home");
     }
+
+    if(mensaje){
+      mostrarAlerta(mensaje)
+      console.log(mensaje)
+    }
     // eslint-disable-next-line
-  }, [autenticado]);
+  }, [mensaje,autenticado]);
 
   const [user, setUser] = useState({
     email: "",
@@ -38,12 +48,12 @@ const Login = (props) => {
     e.preventDefault();
 
     if (email.trim() === "" || password.trim() === "") {
-      setAlert("Todos los campos son obligatorios");
+      mostrarAlerta("Todos los campos son obligatorios");
       return;
     }
 
     if (error) {
-      setAlert("Usuario no existe");
+      mostrarAlerta("Usuario no existe");
       return;
     }
     login({ email, password });
@@ -51,6 +61,11 @@ const Login = (props) => {
 
   const responseGoogleSuccess = (response) => {
     const obj = response.profileObj;
+    if(error){
+      mostrarAlerta(alerta);
+      return;
+    }
+
     let toSend = {
       email: obj.email,
       password: response.tokenObj.login_hint
@@ -86,7 +101,7 @@ const Login = (props) => {
               value={password}
               onChange={handleChange}
             ></Input>
-            {alert ? <Error message={alert} /> : null}
+           {alerta ? (<Error message={alerta} />) :null}
             <Button className="button" type="primary" onClick={onSubmit}>
               Iniciar Sesión
             </Button>

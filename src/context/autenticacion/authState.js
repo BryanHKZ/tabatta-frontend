@@ -21,6 +21,7 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     error: null,
+   
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -28,20 +29,20 @@ const AuthState = (props) => {
   const registerUser = async (dates) => {
     try {
       const res = await clienteAxios.post("/api/user", dates);
-      console.log(res.data);
+      console.log(res);
 
       dispatch({
         type: REGISTRO_EXITOSO,
         payload: res.data,
       });
+      
 
       usuarioAutenticado();
     } catch (error) {
-      console.log(error);
-
+      console.log(error.response.data.msg);
       dispatch({
         type: REGISTRO_ERROR,
-        payload: error,
+        payload: error.response.data.msg
       });
     }
   };
@@ -80,8 +81,9 @@ const AuthState = (props) => {
 
       dispatch({
         type: LOGIN_ERROR,
-        payload: error,
+        payload: error.response.data.msg,
       });
+      
     }
   };
 
@@ -98,6 +100,7 @@ const AuthState = (props) => {
         autenticado: state.autenticado,
         error: state.error,
         usuario: state.usuario,
+        mensaje: state.mensaje,
         registerUser,
         login,
         cerrarSesion,

@@ -33,7 +33,9 @@ export const AuthReducer = (state, action) => {
       return {
         ...state,
         error: true,
+        mensaje: action.payload
       };
+      
     case CERRAR_SESION:
       localStorage.removeItem("token");
       localStorage.removeItem("autenticado");

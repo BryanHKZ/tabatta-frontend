@@ -6,6 +6,7 @@ import "./index.css";
 import ExerciseState from "./context/ejercicios/exerciseState";
 import AuthState from "./context/autenticacion/authState";
 import TabattaState from "./context/tabatta/tabattaState";
+import AlertaState from "./context/alertas/alertaState"
 
 import Home from "./views/home/Home";
 import Login from "./views/login/Login";
@@ -15,6 +16,7 @@ import RutaPrivada from "./views/rutas/RutaPrivada"
 
 const App = () => {
   return (
+    <AlertaState>
     <AuthState>
       <TabattaState>
         <ExerciseState>
@@ -29,6 +31,7 @@ const App = () => {
         </ExerciseState>
       </TabattaState>
     </AuthState>
+    </AlertaState>
   );
 };
 
