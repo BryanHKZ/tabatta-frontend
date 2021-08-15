@@ -13,7 +13,7 @@ const Register = (props) => {
   const { alerta, mostrarAlerta } = alertaContext;
 
   const authContext = useContext(AuthContext);
-  const { autenticado, registerUser, error, mensaje } = authContext;
+  const { autenticado, registerUser, mensaje } = authContext;
 
   useEffect(() => {
     if (autenticado) {
@@ -34,7 +34,8 @@ const Register = (props) => {
     password: "",
     confirm: "",
     sexo: "M",
-    number:""
+    number:''
+   
   });
 
   const { name, email, password, confirm, sexo, number } = user;
@@ -53,8 +54,8 @@ const Register = (props) => {
       name.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
-      confirm.trim() === "" ||
-      number.trim() === ""
+      confirm.trim() === "" 
+      
     ) {
       mostrarAlerta("Todos los campos son obligatorios");
       return;
@@ -75,7 +76,7 @@ const Register = (props) => {
       email,
       sexo,
       password,
-      number,
+      number
     });
   };
 
@@ -122,14 +123,14 @@ const Register = (props) => {
               onChange={handleChange}
             ></Input>
             <br />
-            <Input
+             <Input
               placeholder="cellphone"
-              type="number"
+              type="text"
               name="number"
               value={number}
               onChange={handleChange}
             ></Input>
-            <br />
+            <br /> 
             <Input
               placeholder="Password"
               type="password"

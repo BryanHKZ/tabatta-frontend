@@ -5,6 +5,8 @@ import {
   LOGIN_EXITOSO,
   REGISTRO_ERROR,
   REGISTRO_EXITOSO,
+  EMAIL_EXITO,
+  EMAIL_ERROR
 } from "../../types";
 
 export const AuthReducer = (state, action) => {
@@ -27,7 +29,7 @@ export const AuthReducer = (state, action) => {
         autenticado: true,
         usuario: action.payload,
       };
-
+    case EMAIL_ERROR: 
     case LOGIN_ERROR:
     case REGISTRO_ERROR:
       return {
@@ -43,6 +45,13 @@ export const AuthReducer = (state, action) => {
         ...state,
         autenticado: null,
       };
+
+      case EMAIL_EXITO: 
+      return{
+        validate:true,
+        EditaUser:action.payload
+
+      }
 
     default:
       return state;

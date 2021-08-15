@@ -11,6 +11,8 @@ import {
   LOGIN_ERROR,
   LOGIN_EXITOSO,
   CERRAR_SESION,
+  EMAIL_EXITO,
+  EMAIL_ERROR
 } from "../../types";
 
 const AuthState = (props) => {
@@ -21,6 +23,8 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     error: null,
+    validate:null,
+    EditaUser:null
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -90,6 +94,25 @@ const AuthState = (props) => {
     });
   };
 
+  const ValidateEmail  = async (date) =>{
+   try {
+    const res = await clienteAxios.patch("/api/user", date);
+    console.log(res.data.editUser);
+
+    dispatch({
+      type: EMAIL_EXITO,
+      payload: res.data.editUser
+    });
+   } catch (error) {
+     console.log(error);
+     dispatch({
+      type: EMAIL_ERROR,
+      payload:error.response.data.msg
+      
+    });
+   }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -97,10 +120,12 @@ const AuthState = (props) => {
         error: state.error,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        validate: state.validate,
         registerUser,
         login,
         cerrarSesion,
         usuarioAutenticado,
+        ValidateEmail
       }}
     >
       {props.children}
