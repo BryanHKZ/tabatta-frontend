@@ -124,6 +124,7 @@ const Register = (props) => {
             ></Input>
             <br />
              <Input
+              className='input'
               placeholder="cellphone"
               type="text"
               name="number"

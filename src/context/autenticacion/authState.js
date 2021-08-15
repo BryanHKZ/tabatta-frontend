@@ -3,6 +3,7 @@ import AuthContext from "./authContext";
 import { AuthReducer } from "./authReducer";
 import tokenAuth from "../../config/tokenAuth";
 import clienteAxios from "../../config/axios";
+import Swal from 'sweetalert2';
 
 import {
   REGISTRO_EXITOSO,
@@ -12,7 +13,9 @@ import {
   LOGIN_EXITOSO,
   CERRAR_SESION,
   EMAIL_EXITO,
-  EMAIL_ERROR
+  EMAIL_ERROR,
+  EDIT_USER_EXITO,
+  EDIT_USER_ERROR
 } from "../../types";
 
 const AuthState = (props) => {
@@ -94,14 +97,14 @@ const AuthState = (props) => {
     });
   };
 
-  const ValidateEmail  = async (date) =>{
+  const ValidateEmail  = async (dato) =>{
    try {
-    const res = await clienteAxios.patch("/api/user", date);
-    console.log(res.data.editUser);
+    const res = await clienteAxios.patch("/api/user", dato);
+    console.log(res.data.user);
 
     dispatch({
       type: EMAIL_EXITO,
-      payload: res.data.editUser
+      payload: res.data.user
     });
    } catch (error) {
      console.log(error);
@@ -113,6 +116,38 @@ const AuthState = (props) => {
    }
   }
 
+  const EditPassword = async (edit) =>{
+      try {
+        const res = await clienteAxios.put("/api/user", edit);
+        console.log(res);
+
+        dispatch({
+          type:EDIT_USER_EXITO,
+          
+        })
+
+        Swal.fire(
+          'Correcto',
+          'La contraseña se cambio Exitosamente',
+          'success'
+      )
+      } catch (error) {
+        console.log(error);
+        dispatch({
+          type: EDIT_USER_ERROR,
+          payload:error.response.data.msg
+          
+        });
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Hubo un error',
+          text: 'Hubo un error, intenta de nuevo'
+      })
+      }
+    
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -121,11 +156,13 @@ const AuthState = (props) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         validate: state.validate,
+        EditaUser:state.EditaUser,
         registerUser,
         login,
         cerrarSesion,
         usuarioAutenticado,
-        ValidateEmail
+        ValidateEmail,
+        EditPassword
       }}
     >
       {props.children}

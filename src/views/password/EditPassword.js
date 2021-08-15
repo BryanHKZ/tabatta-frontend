@@ -1,12 +1,26 @@
-import React,{useState, useContext} from 'react';
+import React,{useState, useContext,useEffect} from 'react';
 import {Input, Button } from "antd";
 import "./styles.css"
 import Error from '../register/Error'
 import AlertaContext from "../../context/alertas/alertaContext";
-const EditPassword = () => {
+import AuthContext from "../../context/autenticacion/authContext";
+const EditPassword = (props) => {
 
     const alertaContext = useContext(AlertaContext);
     const { alerta, mostrarAlerta } = alertaContext;
+
+    const authContext = useContext(AuthContext);
+    const {mensaje,EditaUser,EditPassword } = authContext;
+
+    useEffect(() => {
+      
+        if (mensaje) {
+          mostrarAlerta(mensaje);
+          
+        }
+    
+        // eslint-disable-next-line
+      }, [mensaje]);
 
     const [user, setUser] = useState({
         password:'',
@@ -39,6 +53,14 @@ const EditPassword = () => {
             mostrarAlerta("las contraseñas no coinciden");
             return;
           }
+
+        
+         EditaUser.password=password
+
+          EditPassword(EditaUser);
+          setTimeout(() => {
+            props.history.push('/');
+          }, 2000);
     }
     return (
         <div className='container'>

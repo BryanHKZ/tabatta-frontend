@@ -6,7 +6,9 @@ import {
   REGISTRO_ERROR,
   REGISTRO_EXITOSO,
   EMAIL_EXITO,
-  EMAIL_ERROR
+  EMAIL_ERROR,
+  EDIT_USER_EXITO,
+  EDIT_USER_ERROR
 } from "../../types";
 
 export const AuthReducer = (state, action) => {
@@ -32,6 +34,7 @@ export const AuthReducer = (state, action) => {
     case EMAIL_ERROR: 
     case LOGIN_ERROR:
     case REGISTRO_ERROR:
+    case EDIT_USER_ERROR: 
       return {
         ...state,
         error: true,
@@ -51,6 +54,11 @@ export const AuthReducer = (state, action) => {
         validate:true,
         EditaUser:action.payload
 
+      }
+
+      case EDIT_USER_EXITO: 
+      return{
+        EditaUser:action.payload
       }
 
     default:

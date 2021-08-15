@@ -5,12 +5,12 @@ import Error from '../register/Error'
 import AlertaContext from "../../context/alertas/alertaContext";
 import AuthContext from "../../context/autenticacion/authContext";
 
-const ValidateEmail = () => {
+const ValidateEmail = (props) => {
     const alertaContext = useContext(AlertaContext);
     const { alerta, mostrarAlerta } = alertaContext;
 
     const authContext = useContext(AuthContext);
-    const {validate, ValidateEmail,mensaje } = authContext;
+    const {validate, ValidateEmail,mensaje,EditaUser } = authContext;
 
     useEffect(() => {
       
@@ -46,8 +46,20 @@ const ValidateEmail = () => {
     }
 
     ValidateEmail({email});
-    
+
 }
+
+    const handleClickE = e =>{
+        e.preventDefault();
+        /* eslint eqeqeq: 0 */
+        if(EditaUser.recoveryPasswordNumber!=code){
+            mostrarAlerta('El codigo no es valido');
+            return;
+        }
+
+        props.history.push('/editPassword');
+
+    }
     return (
         <div className='container'>
            
@@ -57,6 +69,7 @@ const ValidateEmail = () => {
                {validate ? 
                    
                    <Input
+                   className='input'
                    placeholder='codigo'
                    type='number'
                    name='code'
@@ -72,12 +85,26 @@ const ValidateEmail = () => {
                     value={email}
                     onChange={handleChange}
                 ></Input>
+
+            }
+
+            {
+                validate ? 
+
+                <Button className='button' type="primary" onClick={handleClickE}>
+                  Enviar 
+                 </Button>
+
+                :
+
+                <Button className='button' type="primary" onClick={handleClick}>
+                Validar 
+                 </Button>
+
             }
               
                     {alerta ? <Error message={alerta} /> :null}
-                <Button className='button' type="primary" onClick={handleClick}>
-                    Validar 
-                </Button>
+               
             </div>
             
         </div>

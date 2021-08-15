@@ -14,6 +14,7 @@ import Login from "./views/login/Login";
 import Register from "./views/register/Register";
 import Tabatta from "./views/tabatta/Tabatta";
 import RutaPrivada from "./views/rutas/RutaPrivada";
+import RutaPrivada2 from "./views/rutas/RutaPrivada2";
 import EditPassword from "./views/password/EditPassword";
 import ValidateEmail from "./views/password/ValidateEmail";
 import User from "./views/user/User";
@@ -31,12 +32,8 @@ const App = () => {
                   <Route exact path="/home" component={Home} />
                   <Route exact path="/" component={Login} />
                   <Route exact path="/register" component={Register} />
-                  <Route exact path="/editPassword" component={EditPassword} />
-                  <Route
-                    exact
-                    path="/validateEmail"
-                    component={ValidateEmail}
-                  />
+                  <RutaPrivada2 exact path="/editPassword" component={EditPassword} />
+                  <Route exact path="/validateEmail" component={ValidateEmail}/>
                   <RutaPrivada exact path="/tabatta" component={Tabatta} />
                   <RutaPrivada exact path="/tabatta/user" component={User} />
                 </Switch>

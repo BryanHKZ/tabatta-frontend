@@ -40,5 +40,8 @@ export const EMAIL_ERROR = "EMAIL_ERROR";
 
 export const GET_USER = "GET_USER"
 
+export const EDIT_USER_EXITO = "EDIT_USER_EXITO";
+export const EDIT_USER_ERROR = "EDIT_USER_ERROR";
+
 
 

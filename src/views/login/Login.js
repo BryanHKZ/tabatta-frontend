@@ -114,6 +114,10 @@ const Login = (props) => {
             <Link to={"/register"} className="link">
               ¿No tienes cuenta? Registrate aquí
             </Link>
+
+            <Link to={"/validateEmail"} className="link">
+              ¿Olvidates tu contraseña?
+            </Link>
           </form>
         </Col>
       </Row>
