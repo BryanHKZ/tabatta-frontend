@@ -70,7 +70,10 @@ const Navbar = () => {
           <ButtonText>Tabatta</ButtonText>
         </HomeButton>
         {autenticado ? (
-          <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
+          <div>
+            <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
+            <NavOption to={"/tabatta/user"}>User</NavOption>
+          </div>
         ) : null}
       </NavigationButtons>
 

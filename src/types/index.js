@@ -38,5 +38,7 @@ export const OCULTAR_ALERTA = "OCULTAR_ALERTA";
 export const EMAIL_EXITO = "EMAIL_EXITO";
 export const EMAIL_ERROR = "EMAIL_ERROR";
 
+export const GET_USER = "GET_USER"
+
 
 
