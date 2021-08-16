@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Input, Slider } from "antd";
+import { Modal, Input } from "antd"; //tEjercicio
 import styled from "@emotion/styled";
 import ExerciseContext from "../../context/ejercicios/exerciseContext";
 import TabattaContext from "../../context/tabatta/tabattaContext";
@@ -27,6 +27,7 @@ const NuevoEjercicioModal = ({
 
   const handleOk = () => {
     exerciseData.routine = selectedTabatta._id;
+    exerciseData.seconds = selectedTabatta.tEjercicio;
     createExercise(exerciseData);
     setUpdateList(true);
     setShowNewExercise(false);
@@ -61,7 +62,7 @@ const NuevoEjercicioModal = ({
         style={{ marginBottom: "10px" }}
       />
 
-      <SearchLabel htmlFor="new-tabatta">
+      {/* <SearchLabel htmlFor="new-tabatta">
         Duración del Ejercicio (En Segundos)
       </SearchLabel>
       <Slider
@@ -71,7 +72,7 @@ const NuevoEjercicioModal = ({
         onChange={(value) => {
           setExerciseData({ ...exerciseData, seconds: value });
         }}
-      />
+      /> */}
     </Modal>
   );
 };

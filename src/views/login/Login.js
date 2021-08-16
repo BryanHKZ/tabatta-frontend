@@ -116,7 +116,7 @@ const Login = (props) => {
             </Link>
 
             <Link to={"/validateEmail"} className="link">
-              ¿Olvidates tu contraseña?
+              ¿Olvidaste tu contraseña?
             </Link>
           </form>
         </Col>

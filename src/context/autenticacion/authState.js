@@ -3,7 +3,7 @@ import AuthContext from "./authContext";
 import { AuthReducer } from "./authReducer";
 import tokenAuth from "../../config/tokenAuth";
 import clienteAxios from "../../config/axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 import {
   REGISTRO_EXITOSO,
@@ -15,7 +15,7 @@ import {
   EMAIL_EXITO,
   EMAIL_ERROR,
   EDIT_USER_EXITO,
-  EDIT_USER_ERROR
+  EDIT_USER_ERROR,
 } from "../../types";
 
 const AuthState = (props) => {
@@ -26,8 +26,8 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     error: null,
-    validate:null,
-    EditaUser:null
+    validate: null,
+    EditaUser: null,
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -97,56 +97,48 @@ const AuthState = (props) => {
     });
   };
 
-  const ValidateEmail  = async (dato) =>{
-   try {
-    const res = await clienteAxios.patch("/api/user", dato);
-    console.log(res.data.user);
+  const ValidateEmail = async (dato) => {
+    try {
+      const res = await clienteAxios.patch("/api/user", dato);
+      console.log(res.data.user);
 
-    dispatch({
-      type: EMAIL_EXITO,
-      payload: res.data.user
-    });
-   } catch (error) {
-     console.log(error);
-     dispatch({
-      type: EMAIL_ERROR,
-      payload:error.response.data.msg
-      
-    });
-   }
-  }
+      dispatch({
+        type: EMAIL_EXITO,
+        payload: res.data.user,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: EMAIL_ERROR,
+        payload: error.response.data.msg,
+      });
+    }
+  };
 
-  const EditPassword = async (edit) =>{
-      try {
-        const res = await clienteAxios.put("/api/user", edit);
-        console.log(res);
+  const EditPassword = async (edit) => {
+    try {
+      const res = await clienteAxios.put("/api/user", edit);
+      console.log(res);
 
-        dispatch({
-          type:EDIT_USER_EXITO,
-          
-        })
+      dispatch({
+        type: EDIT_USER_EXITO,
+      });
 
-        Swal.fire(
-          'Correcto',
-          'La contraseña se cambio Exitosamente',
-          'success'
-      )
-      } catch (error) {
-        console.log(error);
-        dispatch({
-          type: EDIT_USER_ERROR,
-          payload:error.response.data.msg
-          
-        });
+      Swal.fire("Correcto", "La contraseña se cambio Exitosamente", "success");
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: EDIT_USER_ERROR,
+        payload: error.response.data.msg,
+      });
 
-        Swal.fire({
-          icon: 'error',
-          title: 'Hubo un error',
-          text: 'Hubo un error, intenta de nuevo'
-      })
-      }
-    
-  }
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error",
+        text: "Hubo un error, intenta de nuevo",
+      });
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -156,13 +148,13 @@ const AuthState = (props) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         validate: state.validate,
-        EditaUser:state.EditaUser,
+        EditaUser: state.EditaUser,
         registerUser,
         login,
         cerrarSesion,
         usuarioAutenticado,
         ValidateEmail,
-        EditPassword
+        EditPassword,
       }}
     >
       {props.children}

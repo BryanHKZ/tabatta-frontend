@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Row, Col, Input, Button } from "antd";
+import { Row, Col, Input, Button, Select } from "antd";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import "../login/Login.css";
@@ -11,6 +11,7 @@ import AlertaContext from "../../context/alertas/alertaContext";
 const Register = (props) => {
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
+  const { Option } = Select;
 
   const authContext = useContext(AuthContext);
   const { autenticado, registerUser, mensaje } = authContext;
@@ -33,18 +34,24 @@ const Register = (props) => {
     email: "",
     password: "",
     confirm: "",
-    sexo: "M",
-    number:''
-   
+    sexo: "",
+    number: "",
   });
 
   const { name, email, password, confirm, sexo, number } = user;
 
   const handleChange = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target) {
+      setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setUser({
+        ...user,
+        sexo: e,
+      });
+    }
   };
 
   const onSubmit = (e) => {
@@ -54,8 +61,7 @@ const Register = (props) => {
       name.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
-      confirm.trim() === "" 
-      
+      confirm.trim() === ""
     ) {
       mostrarAlerta("Todos los campos son obligatorios");
       return;
@@ -76,7 +82,7 @@ const Register = (props) => {
       email,
       sexo,
       password,
-      number
+      number,
     });
   };
 
@@ -87,10 +93,13 @@ const Register = (props) => {
       return;
     }
 
+    console.log(response);
+
     let toSend = {
       name: obj.name,
       email: obj.email,
-      sexo: "M",
+      sexo: "Google_Sex",
+      number: "Google_Num",
       password: response.tokenObj.login_hint,
     };
 
@@ -106,9 +115,9 @@ const Register = (props) => {
       <Row>
         <Col span={12}>
           <form className="login_col login_pre">
-            <p className="label">Register</p>
+            <p className="label">Registrar Usuario</p>
             <Input
-              placeholder="name"
+              placeholder="Nombre"
               type="text"
               name="name"
               value={name}
@@ -123,17 +132,27 @@ const Register = (props) => {
               onChange={handleChange}
             ></Input>
             <br />
-             <Input
-              className='input'
-              placeholder="cellphone"
-              type="text"
-              name="number"
-              value={number}
-              onChange={handleChange}
-            ></Input>
-            <br /> 
+            <div className="pinga">
+              <Input
+                className="input"
+                placeholder="Número de Celular"
+                type="number"
+                name="number"
+                value={number}
+                onChange={handleChange}
+              ></Input>
+              <Select
+                defaultValue="- Género -"
+                onChange={handleChange}
+              >
+                <Option value="M">Masculino</Option>
+                <Option value="F">Femenino</Option>
+                <Option value="NB">No Binario</Option>
+              </Select>
+            </div>
+            <br />
             <Input
-              placeholder="Password"
+              placeholder="Contraseña"
               type="password"
               name="password"
               value={password}
@@ -141,7 +160,7 @@ const Register = (props) => {
             ></Input>
             <br />
             <Input
-              placeholder="Repeat Password"
+              placeholder="Repetir Contraseña"
               type="password"
               name="confirm"
               value={confirm}
@@ -149,7 +168,7 @@ const Register = (props) => {
             ></Input>
             {alerta ? <Error message={alerta} /> : null}
             <Button className="button2" type="primary" onClick={onSubmit}>
-              Register
+              Registrarse
             </Button>
             <GoogleLogin
               clientId="275579725547-svpsm1vug72l2imh3a2b2fgfjfevmsks.apps.googleusercontent.com"

@@ -1,3 +1,8 @@
 .jola {
     color: rgb(143, 138, 138);
 }
+.title-search {
+    margin: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,29 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import LayoutCrud from "../../components/LayoutCrud";
-import Searchs from "./components/Search";
-import { Row, Col, Table, Button } from "antd";
+import { Row, Col, Table, Button, Input } from "antd";
 import styled from "@emotion/styled";
 import "./User.css";
 import UserContext from "../../context/user/userContext";
+import Swal from "sweetalert2";
 import { DeleteOutlined } from "@ant-design/icons";
 
-const ColTitle = styled(Col)`
-  height: 70px;
-  align-items: end;
-  display: grid;
-`;
-
-const ColSearch = styled(Col)`
-  display: grid;
-  justify-content: center;
-`;
-
-const RowUser = styled(Row)`
-  height: 40px;
-  display: grid;
-  align-items: center;
-  margin-bottom: 21px;
-`;
+const { Search } = Input;
 
 const ButtonDelete = styled(Button)`
   border: none;
@@ -33,68 +17,88 @@ const ButtonDelete = styled(Button)`
     background: #fafafa;
   }
   :focus {
-    color: red;
-    background: #fafafa;
+    color: rgb(143, 138, 138);
+    background: #fff;
   }
+`;
+
+const InputSearch = styled(Search)`
+  width: 300px;
+  border: none;
 `;
 
 const DeleteIcon = styled(DeleteOutlined)`
   font-size: 18px;
 `;
 
-const columns = [
-  {
-    title: "Id",
-    dataIndex: "_id",
-    key: "id",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Email;",
-    dataIndex: "email",
-    key: "email;",
-  },
-  {
-    title: "Number",
-    dataIndex: "number",
-    key: "number",
-  },
-  {
-    title: "Sex",
-    dataIndex: "sexo",
-    key: "sexo",
-  },
-  {
-    title: "Register",
-    dataIndex: "registro",
-    key: "registro",
-  },
-  {
-    title: "Action",
-    dataIndex: "",
-    key: "action",
-    render: (text, record) => (
-      <div>
-        <ButtonDelete>
-          <DeleteIcon />
-        </ButtonDelete>
-      </div>
-    ),
-  },
-];
-
 const User = () => {
   const [dataSource, setDataSource] = useState([]);
+  const [dataFilter, setDataFilter] = useState("");
 
   const userContext = useContext(UserContext);
 
-  const { getUser, user } = userContext;
+  const { getUser, user, removeUser } = userContext;
 
-  console.log(getUser);
+  const showAlert = (idUser) => {
+    Swal.fire({
+      title: "Advertencia",
+      text: "Esta acción es irreversible, ¿Desea continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar"
+    }).then((e) => {
+      if (e.isConfirmed) {
+        removeUser(idUser);
+      }
+    });
+  };
+
+  const columns = [
+    {
+      title: "Nombre",
+      dataIndex: "name",
+      key: "_id",
+    },
+    {
+      title: "Correo Electrónico",
+      dataIndex: "email",
+      key: "_id",
+    },
+    {
+      title: "Número",
+      dataIndex: "number",
+      key: "_id",
+    },
+    {
+      title: "Género",
+      dataIndex: "sexo",
+      key: "_id",
+    },
+    {
+      title: "Fecha de Registro",
+      dataIndex: "registro",
+      key: "_id",
+    },
+    {
+      title: "Acciones",
+      dataIndex: "",
+      key: "_id",
+      render: (text, record) => (
+        <div>
+          <ButtonDelete
+            onClick={() => {
+              showAlert(text._id);
+            }}
+          >
+            <DeleteIcon />
+          </ButtonDelete>
+        </div>
+      ),
+    },
+  ];
 
   useEffect(() => {
     setDataSource(user);
@@ -105,40 +109,33 @@ const User = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onSerach = (value) => {
+  useEffect(() => {
+    onSearch(dataFilter);
+    // eslint-disable-next-line
+  }, [dataFilter]);
+
+  const onSearch = (value) => {
     const filter = user.filter(
       (u) =>
-        u.id === value ||
+        u._id === value ||
         u.name.toLowerCase().includes(value.toLowerCase()) ||
         u.email.toLowerCase().includes(value.toLowerCase()) ||
         u.number.toLowerCase().includes(value.toLowerCase()) ||
-        u.sexo.toLowerCase().includes(value.toLowerCase()) 
+        u.sexo.toLowerCase().includes(value.toLowerCase())
     );
     setDataSource(filter);
   };
-
   return (
     <LayoutCrud>
-      <Row>
-        <Col span={1}></Col>
-        <ColTitle span={23}>
-          <h3>Usuarios:</h3>
-        </ColTitle>
+      <Row className="title-search">
+        <h3>Usuarios:</h3>
+        <InputSearch value={dataFilter} onChange={(e) => setDataFilter(e.target.value)} onSearch={onSearch} placeholder="Término de Busqueda" />
       </Row>
-      <RowUser>
-        <Col span={1}></Col>
-        <ColSearch span={22}>
-          <Searchs onSerach={onSerach} />
-        </ColSearch>
-        <Col span={1}></Col>
-      </RowUser>
 
       <Row>
-        <Col span={1}></Col>
-        <Col span={22}>
+        <Col span={24}>
           <Table columns={columns} dataSource={dataSource} />
         </Col>
-        <Col span={1}></Col>
       </Row>
     </LayoutCrud>
   );

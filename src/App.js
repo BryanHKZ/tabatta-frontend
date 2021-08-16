@@ -15,12 +15,12 @@ import Register from "./views/register/Register";
 import Tabatta from "./views/tabatta/Tabatta";
 import RutaPrivada from "./views/rutas/RutaPrivada";
 import RutaPrivada2 from "./views/rutas/RutaPrivada2";
+import RutaPrivada3 from "./views/rutas/RutaPrivada3";
 import EditPassword from "./views/password/EditPassword";
 import ValidateEmail from "./views/password/ValidateEmail";
 import User from "./views/user/User";
 
 const App = () => {
-  console.log(UserState)
   return (
     <AlertaState>
       <AuthState>
@@ -35,7 +35,8 @@ const App = () => {
                   <RutaPrivada2 exact path="/editPassword" component={EditPassword} />
                   <Route exact path="/validateEmail" component={ValidateEmail}/>
                   <RutaPrivada exact path="/tabatta" component={Tabatta} />
-                  <RutaPrivada exact path="/tabatta/user" component={User} />
+                  <RutaPrivada3 exact path="/tabatta/user" component={User} />
+                  {/* <RutaPrivada3 exact path="/tabatta/user" */}
                 </Switch>
               </Router>
             </UserState>

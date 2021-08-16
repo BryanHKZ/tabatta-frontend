@@ -13,22 +13,24 @@ const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
   const [tabattaData, setTabattaData] = useState({
     name: "",
     rest: 0,
-    preparation: 0
+    preparation: 0,
+    tEjercicio: 0
   });
 
-  const { name, preparation, rest } = tabattaData;
+  const { name, preparation, rest, tEjercicio } = tabattaData;
 
   const tabattaContext = useContext(TabattaContext);
   const { crearTabatta, obtenerTabattas } = tabattaContext;
 
   const handleOk = () => {
     setShowNewTabatta(false);
-    crearTabatta({ name, preparation, break: rest });
+    crearTabatta({ name, preparation, break: rest, tEjercicio });
     obtenerTabattas();
     setTabattaData({
       name: "",
       preparation: 0,
-      rest: 0
+      rest: 0,
+      tEjercicio: 0
     });
   };
   const handleCancel = () => {
@@ -36,7 +38,8 @@ const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
     setTabattaData({
       name: "",
       preparation: 0,
-      rest: 0
+      rest: 0,
+      tEjercicio: 0
     });
   };
 
@@ -68,6 +71,17 @@ const NuevoTabattaModal = ({ visible, setShowNewTabatta }) => {
         value={tabattaData.preparation}
         onChange={(value) => {
           setTabattaData({ ...tabattaData, preparation: value });
+        }}
+      />
+      <SearchLabel>
+        Tiempo de Ejercicio (En Segundos)
+      </SearchLabel>
+      <Slider
+        defaultValue={0}
+        max={60}
+        value={tabattaData.tEjercicio}
+        onChange={(value) => {
+          setTabattaData({ ...tabattaData, tEjercicio: value });
         }}
       />
       <SearchLabel>

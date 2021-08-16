@@ -45,6 +45,12 @@
   height: 500px;
 }
 
+.pinga {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
 .google-button {
   font-family: 'Montserrat', sans-serif !important;
   box-shadow: 0 2px 0 rgb(0 0 0 / 5%) !important;

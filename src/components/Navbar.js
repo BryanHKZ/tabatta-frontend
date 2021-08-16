@@ -52,7 +52,7 @@ const NavCSOption = styled(Link)`
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { cerrarSesion, autenticado } = authContext;
+  const { cerrarSesion, autenticado, usuario } = authContext;
 
   const tabattaContext = useContext(TabattaContext);
   const { eliminarTabattaSeleccionado } = tabattaContext;
@@ -72,7 +72,9 @@ const Navbar = () => {
         {autenticado ? (
           <div>
             <NavOption to={"/tabatta"}>Lista de Tabattas</NavOption>
-            <NavOption to={"/tabatta/user"}>User</NavOption>
+            {usuario.isAdmin ? (
+              <NavOption to={"/tabatta/user"}>User</NavOption>
+            ) : null}
           </div>
         ) : null}
       </NavigationButtons>
